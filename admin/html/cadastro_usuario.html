@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatação de Input</title>
+    <script src="/admin/javascript/cadastro.js"></script>
+    <style>
+        .input-container {
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #formatted-input {
+            padding: 10px;
+            font-size: 18px;
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <input type="text" id="formatted-input" placeholder="Digite o número">
+    </div>
+
+    <script>
+        document.getElementById('formatted-input').addEventListener('input', function (e) {
+            var value = e.target.value;
+            value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            value = value.replace(/^(\d{3})(\d)/, '$1.$2'); // Adiciona o primeiro ponto
+            value = value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3'); // Adiciona o segundo ponto
+            value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4'); // Adiciona o hífen
+
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

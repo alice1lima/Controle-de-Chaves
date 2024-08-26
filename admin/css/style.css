@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    font-family: 'Chau', 'Philomene', sans-serif;
+    background-color: #EFECEC;   
+}
+
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #FFFFFF;
+
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    height: 100px; /* Aumenta a altura da logo */
+    max-height: 150px;
+    object-fit: contain;
+}
+
+.title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding: 20px;
+    width: 100%;
+    text-align: center; /* Centraliza o texto dentro dos elementos */
+
+}
+
+.titulo1 {
+    color: #EC2B57;
+    margin: 0 10px;
+    font-size: 2em;
+    
+}
+
+.subtitulo {
+    color: #000000;
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+
+.titulo2 {
+    color: #245397;
+    margin: 0 10px;
+    font-size: 2em;
+}
+
+.rotated-letter {
+    display: inline-block;
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+/* CSS para colar os elementos h1 e h3 */
+.titulo1, .subtitulo, .titulo2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Opcional: Estilizando os títulos para visualização */
+.titulo1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.subtitulo {
+    font-size: 22px;
+    font-weight: normal;
+    padding-top: 10px;
+}
+
+.titulo2 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+/* Adiciona um pequeno espaçamento entre o h3 e o segundo h1 se necessário */
+.subtitulo {
+    margin-bottom: 0.5em; /* Ajuste conforme necessário */
+}
+
+

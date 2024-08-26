@@ -1,0 +1,53 @@
+<?php
+
+// Configurações de exibição de erros
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Inclui o arquivo de conexão com o banco de dados
+include($_SERVER['DOCUMENT_ROOT'] . '/controle_chave/banco/conexao.php');
+
+// Verifica se o ID do usuário foi passado na URL
+if (isset($_GET["id_usuario"])) {
+    $id = intval($_GET["id_usuario"]); // Assegura que o ID é um número inteiro
+
+    // Consulta SQL para selecionar os dados do usuário com o ID fornecido
+    $sql = "SELECT * FROM tb_usuarios WHERE id_usuario = $id";
+    $resultado = mysqli_query($conn, $sql);
+
+    // Verifica se o usuário foi encontrado
+    if (mysqli_num_rows($resultado) == 1) {
+        // Deleta o usuário do banco de dados
+        $deleta = mysqli_query($conn, "DELETE FROM tb_usuarios WHERE id_usuario = $id");
+
+        if ($deleta) {
+            echo "Usuário deletado com sucesso!";
+            header("Location: visualizar_usuario.php");
+            exit();
+        } else {
+            echo "Erro ao deletar o usuário: " . mysqli_error($conn);
+        }
+    } else {
+        echo "Usuário não encontrado.";
+    }
+} else {
+    echo "ID do usuário não encontrado na URL.";
+}
+
+?>
+
+
+<?php
+session_start(); // Iniciar sessão
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Verificar se o usuário está autenticado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ./admin/index.php"); // Redireciona para a página de login
+    exit();
+}
+?>

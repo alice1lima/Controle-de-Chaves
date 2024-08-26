@@ -1,0 +1,43 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include($_SERVER['DOCUMENT_ROOT'] . '/controle_chave/banco/conexao.php');
+
+if (isset($_GET["id_sala"])) {
+    $id_sala = intval($_GET["id_sala"]);
+    $sql = "SELECT * FROM tb_salas WHERE id_sala = $id_sala";
+    $resultado = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($resultado) == 1) {
+        $deleta = mysqli_query($conn, "DELETE FROM tb_salas WHERE id_sala = $id_sala");
+
+        if ($deleta) {
+            echo "Sala deletada com sucesso!";
+            header("Location: visualizar_sala.php");
+            exit();
+        } else {
+            echo "Erro ao deletar a sala: " . mysqli_error($conn);
+        }
+    } else {
+        echo "Sala não encontrada.";
+    }
+} else {
+    echo "ID da sala não encontrado na URL.";
+}
+?>
+
+<?php
+session_start(); // Iniciar sessão
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Verificar se o usuário está autenticado
+if (!isset($_SESSION['id_usuario'])) {
+    header("Location: ./admin/index.php"); // Redireciona para a página de login
+    exit();
+}
+?>

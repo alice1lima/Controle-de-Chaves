@@ -1,0 +1,74 @@
+
+        /* Estilos para o modal */
+        .modal {
+            display: none; /* Ocultar o modal por padrão */
+            position: fixed; /* Ficar fixo na tela */
+            z-index: 1; /* Ficar acima de outros elementos */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Permitir rolagem se necessário */
+            background-color: rgb(0,0,0); /* Fallback para cores mais antigas */
+            background-color: rgba(0,0,0,0.4); /* Cor de fundo com opacidade */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% a partir do topo e centralizado */
+            padding: 20px;
+            width: 80%; /* Largura do modal */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-bottom: 1px solid #EC2B57 ;
+
+        }
+
+        table, th, td {
+            border-bottom: 1px solid #EC2B57 ;
+            border-left: none;
+            border-right: none;
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            color: #EC2B57;
+
+        }
+
+        th {
+            background-color: #f2f2f2;
+            
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        h2{
+            text-align: center;
+        }
+   
+       

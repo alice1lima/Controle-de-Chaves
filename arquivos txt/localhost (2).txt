@@ -1,0 +1,259 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Tempo de geração: 19-Jun-2024 às 00:37
+-- Versão do servidor: 8.0.37
+-- versão do PHP: 8.1.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `db_salas`
+--
+CREATE DATABASE IF NOT EXISTS `db_salas` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `db_salas`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_cargos`
+--
+
+CREATE TABLE `tb_cargos` (
+  `id_cargo` int NOT NULL,
+  `cargo` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `tb_cargos`
+--
+
+INSERT INTO `tb_cargos` (`id_cargo`, `cargo`) VALUES
+(2, 'professor'),
+(3, 'aluno'),
+(5, 'funcionario'),
+(6, 'Aux. Administrativo'),
+(7, 'malu');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_ocupacoes`
+--
+
+CREATE TABLE `tb_ocupacoes` (
+  `id_ocupacao` int NOT NULL,
+  `id_sala` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  `dh_entrada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dh_saida` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `observacoes` varchar(200) DEFAULT NULL,
+  `devolver_chave` tinyint NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `tb_ocupacoes`
+--
+
+INSERT INTO `tb_ocupacoes` (`id_ocupacao`, `id_sala`, `id_usuario`, `dh_entrada`, `dh_saida`, `observacoes`, `devolver_chave`) VALUES
+(1, 4, 3, '2024-06-15 13:14:52', '2024-06-15 13:16:21', '', 1),
+(2, 4, 3, '2024-06-15 13:17:34', '2024-06-15 13:18:33', 'o ar-condicionador estava quebrado', 1),
+(3, 4, 9, '2024-06-15 13:22:19', '2024-06-15 13:22:54', '', 1),
+(4, 4, 3, '2024-06-15 13:26:45', '2024-06-15 13:26:45', 'l~ç', 0),
+(5, 5, 2, '2024-06-18 19:52:31', '2024-06-18 21:06:24', '', 1),
+(6, 5, 2, '2024-06-18 21:07:21', '2024-06-18 21:08:59', '', 1),
+(7, 4, 2, '2024-06-18 21:09:26', '2024-06-18 21:09:31', '', 1),
+(8, 5, 2, '2024-06-18 21:23:09', '2024-06-18 21:23:09', 'ola ola ola ola', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_reservas`
+--
+
+CREATE TABLE `tb_reservas` (
+  `id_reserva` int NOT NULL,
+  `id_sala` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  `entrada_previsao` datetime NOT NULL,
+  `saida_previsao` datetime NOT NULL,
+  `dh_reserva` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `eh_aprovada` tinyint NOT NULL DEFAULT '0',
+  `devolver_chave` tinyint NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `tb_reservas`
+--
+
+INSERT INTO `tb_reservas` (`id_reserva`, `id_sala`, `id_usuario`, `entrada_previsao`, `saida_previsao`, `dh_reserva`, `eh_aprovada`, `devolver_chave`) VALUES
+(1, 5, 2, '2024-06-28 19:23:00', '2024-06-30 19:23:00', '2024-06-18 19:23:24', 0, 1),
+(2, 5, 2, '2024-06-30 19:33:00', '2024-07-05 19:33:00', '2024-06-18 19:33:09', 0, 1),
+(3, 4, 2, '2024-06-30 19:35:00', '2024-06-30 19:35:00', '2024-06-18 19:35:48', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_salas`
+--
+
+CREATE TABLE `tb_salas` (
+  `id_sala` int NOT NULL,
+  `sala` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `bloco` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `tb_salas`
+--
+
+INSERT INTO `tb_salas` (`id_sala`, `sala`, `bloco`) VALUES
+(4, 'A1/A2  - laboratorio de dómotica', 'Bloco A'),
+(5, 'A3 - sala de aula', 'Bloco A');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_usuarios`
+--
+
+CREATE TABLE `tb_usuarios` (
+  `id_usuario` int NOT NULL,
+  `cpf` varchar(11) NOT NULL,
+  `nome_usuario` varchar(45) NOT NULL,
+  `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `telefone` varchar(15) NOT NULL,
+  `eh_admin` tinyint(1) NOT NULL DEFAULT '0',
+  `eh_ativo` tinyint(1) NOT NULL DEFAULT '0',
+  `id_cargo` int NOT NULL,
+  `dh_cadastro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Extraindo dados da tabela `tb_usuarios`
+--
+
+INSERT INTO `tb_usuarios` (`id_usuario`, `cpf`, `nome_usuario`, `senha`, `telefone`, `eh_admin`, `eh_ativo`, `id_cargo`, `dh_cadastro`) VALUES
+(2, '98745632115', 'teste', '$2y$10$UAZ9tgCqS1hvKST.7JaDZ.f.uoowBGyfmY6tfIqH.YrX/xvpE7pUS', '5102454326', 0, 1, 3, '2024-06-12 14:53:02'),
+(3, '65665656863', 'teste2', '$2y$10$6dC/3btLY8.YApxHP/BrG.feZyCxfB1gud1prI.t2usNW0hXdMJdW', '04648508', 0, 1, 5, '2024-06-12 15:15:34'),
+(4, '54548198746', 'teste00', '12', '105451554', 1, 0, 2, '2024-06-12 15:16:49'),
+(9, '98745852956', 'malu', '$2y$10$bLnTfiBQIiGMOCswAsuHc.suHDocVGkzdKHOVPTzmfzMilKOQazY6', '', 0, 1, 3, '2024-06-13 16:00:59'),
+(10, '664546/7986', 'admin', '123', '', 1, 1, 2, '2024-06-13 16:20:49'),
+(11, '45342124120', 'malu', '10', '', 1, 1, 3, '2024-06-13 16:43:32'),
+(12, '12345678910', 'Administrador', 'admin', '', 1, 1, 6, '2024-06-13 22:32:17'),
+(13, '10987654321', 'alice', '****', '', 0, 1, 3, '2024-06-17 13:40:03'),
+(14, '09842485165', 'isabela', '    ', '', 0, 1, 2, '2024-06-18 20:00:13');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices para tabela `tb_cargos`
+--
+ALTER TABLE `tb_cargos`
+  ADD PRIMARY KEY (`id_cargo`);
+
+--
+-- Índices para tabela `tb_ocupacoes`
+--
+ALTER TABLE `tb_ocupacoes`
+  ADD PRIMARY KEY (`id_ocupacao`),
+  ADD KEY `id_sala` (`id_sala`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Índices para tabela `tb_reservas`
+--
+ALTER TABLE `tb_reservas`
+  ADD PRIMARY KEY (`id_reserva`),
+  ADD KEY `id_sala` (`id_sala`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Índices para tabela `tb_salas`
+--
+ALTER TABLE `tb_salas`
+  ADD PRIMARY KEY (`id_sala`),
+  ADD UNIQUE KEY `descricao_sala_UNIQUE` (`sala`);
+
+--
+-- Índices para tabela `tb_usuarios`
+--
+ALTER TABLE `tb_usuarios`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  ADD KEY `id_cargo` (`id_cargo`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `tb_cargos`
+--
+ALTER TABLE `tb_cargos`
+  MODIFY `id_cargo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de tabela `tb_ocupacoes`
+--
+ALTER TABLE `tb_ocupacoes`
+  MODIFY `id_ocupacao` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de tabela `tb_reservas`
+--
+ALTER TABLE `tb_reservas`
+  MODIFY `id_reserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `tb_salas`
+--
+ALTER TABLE `tb_salas`
+  MODIFY `id_sala` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `tb_usuarios`
+--
+ALTER TABLE `tb_usuarios`
+  MODIFY `id_usuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `tb_ocupacoes`
+--
+ALTER TABLE `tb_ocupacoes`
+  ADD CONSTRAINT `tb_ocupacoes_ibfk_1` FOREIGN KEY (`id_sala`) REFERENCES `tb_salas` (`id_sala`),
+  ADD CONSTRAINT `tb_ocupacoes_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuarios` (`id_usuario`);
+
+--
+-- Limitadores para a tabela `tb_reservas`
+--
+ALTER TABLE `tb_reservas`
+  ADD CONSTRAINT `tb_reservas_ibfk_1` FOREIGN KEY (`id_sala`) REFERENCES `tb_salas` (`id_sala`),
+  ADD CONSTRAINT `tb_reservas_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `tb_usuarios` (`id_usuario`);
+
+--
+-- Limitadores para a tabela `tb_usuarios`
+--
+ALTER TABLE `tb_usuarios`
+  ADD CONSTRAINT `tb_usuarios_ibfk_1` FOREIGN KEY (`id_cargo`) REFERENCES `tb_cargos` (`id_cargo`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

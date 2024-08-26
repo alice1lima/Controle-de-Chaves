@@ -1,0 +1,68 @@
+
+CREATE TABLE tb_usuarios (
+  id_usuario INT NOT NULL AUTO_INCREMENT,
+  cpf VARCHAR(11) NOT NULL,
+  nome_usuario VARCHAR(45) NOT NULL,
+  senha VARCHAR(20) NOT NULL,
+  id_cargo INT NOT NULL,
+  eh_admin TINYINT NOT NULL DEFAULT 0,
+  eh_ativo TINYINT NOT NULL DEFAULT 1,
+  dh_cadastro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id_usuario),
+  UNIQUE INDEX cpf_UNIQUE (cpf` ASC) VISIBLE);
+
+CREATE TABLE tb_cargos (
+  id_cargo INT NOT NULL AUTO_INCREMENT,
+  cargo VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id_cargo));
+
+CREATE TABLE tb_salas (
+  id_sala INT NOT NULL AUTO_INCREMENT,
+  descricao_sala VARCHAR(20) NOT NULL,
+  local VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id_sala),
+  UNIQUE INDEX descricao_sala_UNIQUE (descricao_sala ASC) VISIBLE);
+
+CREATE TABLE tb_ocupacoes (
+  id_ocupacao INT NOT NULL AUTO_INCREMENT,
+  id_sala INT NOT NULL,
+  id_usuario INT NOT NULL,
+  dh_entrada DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  dh_saida DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  observacoes VARCHAR(200) NULL,
+  PRIMARY KEY (id_ocupacao));
+
+CREATE TABLE tb_reservas (
+  id_reserva INT NOT NULL AUTO_INCREMENT,
+  id_sala INT NOT NULL,
+  id_usuario INT NOT NULL,
+  dh_previsao DATE NOT NULL,
+  entrada_previsao TIME NOT NULL,
+  saida_previsao TIME NOT NULL,
+  dh_reserva DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  
+  eh_aprovada TINYINT NOT NULL DEFAULT 0,
+  PRIMARY KEY (id_reserva));
+
+ALTER TABLE tb_usuarios
+ADD FOREIGN KEY (id_cargo) REFERENCES tb_cargos(id_cargo);
+
+ALTER TABLE tb_reservas
+ADD FOREIGN KEY (id_sala) REFERENCES tb_salas(id_sala);
+
+ALTER TABLE tb_reservas
+ADD FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario);
+
+ALTER TABLE tb_ocupacoes
+ADD FOREIGN KEY (id_sala) REFERENCES tb_salas(id_sala);
+
+ALTER TABLE tb_ocupacoes
+ADD FOREIGN KEY (id_usuario) REFERENCES tb_usuarios(id_usuario);
+
+
+
+
+
+
+
+
+

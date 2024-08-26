@@ -1,0 +1,19 @@
+Admin / crud_cargo ---- ok ---- BACK END
+
+Admin / crud_reserva ---- ok ---- BACK END 
+
+Admin / crud_salas ---- ok ---- BACK END
+
+Admin / crud_usuario ---- ok ---- BACK END
+
+index ---- ok ---- BACK END
+
+
+-------------------------------------------------
+             Admin
+Cargo - front end ---- ok
+
+Sala - front end ---- Obs: concertar alguns bugs do front end - layout
+
+Usuario - front end
+

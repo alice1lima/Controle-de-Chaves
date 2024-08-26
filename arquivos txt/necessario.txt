@@ -1,0 +1,32 @@
+script da seta para voltar para a pagina anterior 
+
+*html*
+<a class="back-arrow" onclick="goBack()">← Voltar</a>
+
+
+
+*style*
+ .back-arrow {
+            font-size: 24px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+*script*
+
+  function goBack() {
+            window.history.back();
+        }
+
+
+
+        devolver chave:
+          if (!$row["devolver_chave"]) {
+                    echo "<a href='devolver_chave2.php?id_reserva=" . $row["id_reserva"] . "' onclick=\"return confirm('Tem certeza que deseja devolver a chave?');\">Devolver Chave</a>";
+                } else {
+                    echo "Chave devolvida";
+                }
+
+                echo "</td>
+                    </tr>";
+            }

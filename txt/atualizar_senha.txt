@@ -1,0 +1,69 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Incluir configuração do banco de dados
+    include './banco/conexao.php';
+
+    // Obter CPF e nova senha do formulário
+    $cpf = $_POST['cpf'];
+    $senha = $_POST['senha'];
+
+    // Atualizar a senha no banco de dados
+    $sql = "UPDATE tb_usuarios SET senha = ? WHERE cpf = ?";
+    $stmt = $conn->prepare($sql);
+    $nova_senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Hash da nova senha
+    $stmt->bind_param("ss", $nova_senha_hash, $cpf);
+
+    if ($stmt->execute()) {
+        echo "Senha atualizada com sucesso.";
+    } else {
+        echo "Erro ao atualizar a senha.";
+    }
+
+    // Fechar a declaração e conexão
+    $stmt->close();
+    $conn->close();
+} else {
+    // Obter CPF da query string
+    if (isset($_GET['cpf'])) {
+        $cpf = $_GET['cpf'];
+    } else {
+        die("CPF não fornecido.");
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Atualizar Senha</title>
+</head>
+<body>
+    <form action="" method="post">
+        <input type="hidden" name="cpf" value="<?php echo htmlspecialchars($cpf); ?>">
+        <label for="senha1">Nova Senha:</label>
+        <input type="password" id="senha1" name="senha" required maxlength="20">
+        <label for="senha2">Confirmar Senha:</label>
+        <input type="password" id="senha2" name="senha" required maxlength="20">
+        <button type="submit" onclick="verificarSenhas()">Atualizar Senha</button>
+    </form>
+</body>
+</html>
+
+<script>
+function verificarSenhas() {
+    var senha1 = document.getElementById("senha1").value;
+    var senha2 = document.getElementById("senha2").value;
+
+    if (senha1 == senha2) {
+       
+    } else {
+        alert("As senhas são diferentes. Por favor, insira senhas iguais nos dois campos.");
+    }
+}
+</script>
+
