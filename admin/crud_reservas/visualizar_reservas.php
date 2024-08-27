@@ -156,9 +156,12 @@ $nome_usuario = isset($_SESSION['nome_usuario']) ? $_SESSION['nome_usuario'] : '
                 </div>
                 <div class="col-md-6 text-right">
                     <ul class="social-media">
-                        <li><a href="#"><i class="bi bi-facebook"></i></a></li>
-                        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
-                        <li><a href="#"><i class="bi bi-twitter"></i></a></li>
+                    <li><a href="https://www.facebook.com/SenaiRN/
+"><i class="bi bi-facebook"></i></a></li>
+                        <li><a href="https://www.instagram.com/senairn/
+"><i class="bi bi-instagram"></i></a></li>
+                        <li><a href="https://twitter.com/senairn
+"><i class="bi bi-twitter"></i></a></li>
                     </ul>
                 </div>
             </div>
